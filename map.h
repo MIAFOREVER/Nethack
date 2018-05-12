@@ -1,15 +1,15 @@
 #pragma once
 class Map
 {
-#define MAX_X 100
-#define MAX_Y 25
-#define MAX_R 8
-#define MIN_R 4
-#define MAPNUM 8
-#define MONSTERNUM 10
-#define PROPNUM 5
-#define WARFOG 10
-
+#define MAX_X 100   //the length of map_x
+#define MAX_Y 25    //the length of map_y
+#define MAX_R 8     //the size of room_max
+#define MIN_R 4     //th size of room_min
+#define MAPNUM 8    //the size of room number
+#define MONSTERNUM 10  //monster number
+#define PROPNUM 5      //prop number
+#define WARFOG 10      //size of war fog 
+#define LAYER 5        //the layer
 public:
 	void run();
 	void actorControl();
@@ -28,6 +28,7 @@ private:
 	void produceProp();
 	void produceActor();
 	void produceNecklace();
+	void produceTranport();
 	void hit(int x,int y);
 	bool inside(int x, int y);
 	int findMonster(int x, int y);
@@ -36,7 +37,7 @@ private:
 	void printGameVoctor();
 private:
 	int map[MAX_X][MAX_Y];//cout<<symbol[map[x][y]];
-	char symbol[30] = { " @X.#MEI|-0123456789S" };
+	char symbol[30] = { " @X.#MEI|-0123456789ST" };
 	int x[MAPNUM], y[MAPNUM], r[MAPNUM];
 	int monster_num = MONSTERNUM;
 	int monster_x[MONSTERNUM];
@@ -57,4 +58,8 @@ private:
 	int necklice_y;
 	bool mainLoop;
 	bool gameLoop;
+	bool alive;
+	int layer;
+	int transport_x;
+	int transport_y;
 };

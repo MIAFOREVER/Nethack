@@ -9,7 +9,7 @@ using namespace std;
 using std::cout;
 using std::endl;
 char keyBroadInput;
-bool cls() //编程方式实现清除屏幕
+bool cls()
 {
 	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	COORD coordScreen = { 0, 0 };    /* here's where we'll home the cursor */
@@ -66,6 +66,10 @@ Map::Map()
 			map[i][j] = 0;
 	actor_Money = 0;
 	actor_attack = 0;
+	layer = 1;
+	mainLoop = true;
+	gameLoop = false;
+	alive = true;
 }
 Map::~Map()
 {
@@ -172,7 +176,6 @@ void Map::produceLink()
 		int xtemp=x[i];
 		int ytemp=y[i];
 		int dis = distance(x[i], y[i], x[i + 1], y[i + 1]);
-		cout << x[i] << " " << y[i] << " " << x[i + 1] << " " << y[i + 1];
 		while (distance(xtemp, ytemp, x[i + 1], y[i + 1])>0)
 		{
 			int direction = rand() % (4);
@@ -245,7 +248,10 @@ void Map::produceRandomMap()
 	produceMonster();
 	produceProp();
 	produceActor();
-	produceNecklace();
+	if (layer < LAYER)
+		produceTranport();
+	else
+		produceNecklace();
 }
 void Map::produceMonster()
 {
@@ -443,8 +449,8 @@ void Map::hit(int x, int y)
 			monster_HP[num] -= actor_attack;
 			if (actor_HP <= 0)
 			{
+				alive = false;
 				mainLoop = false;
-				gameLoop = false;
 			}
 		}
 	}
@@ -457,6 +463,33 @@ void Map::hit(int x, int y)
 		actor_x = x;
 		actor_y = y;
 	}
+	if (map[x][y] == 20)
+	{
+		mainLoop = false;
+		gameLoop = true;
+	}
+	if (map[x][y] == 21)
+	{
+		mainLoop = false;
+	}
+}
+void Map::produceTranport()
+{
+	int x = 0;
+	int y = 0;
+	int i = 1;
+	while (i)
+	{
+		x = rand() % MAX_X;
+		y = rand() % MAX_Y;
+		if (map[x][y] == 3)
+		{
+			transport_x = x;
+			transport_y = y;
+			map[x][y] = 21;
+			i--;
+		}
+	}
 }
 void Map::produceNecklace()
 {
@@ -465,8 +498,8 @@ void Map::produceNecklace()
 	int i = 1;
 	while (i)
 	{
-		x = rand() % 100;
-		y = rand() % 100;
+		x = rand() % MAX_X;
+		y = rand() % MAX_Y;
 		if (map[x][y] == 3)
 		{
 			necklice_x = x;
@@ -518,6 +551,7 @@ void Map::monsterMove()
 void Map::printActor()
 {
 	cout << "Actor HP: " << actor_HP << "   ATTACK: " << actor_attack << "   MONEY: " << actor_Money <<"   X: "<<actor_x<<"   Y: "<<actor_y<< endl;
+	cout << "the number of layer:   " << layer << "  tranport_x: " << transport_x << "  tansport_y: " << transport_y;
 }
 void Map::printGameOver()
 {
@@ -537,18 +571,23 @@ void Map::run()
 {
 	srand(time(0));
 	HANDLE handle = CreateThread(NULL, 0, ThreadKeyWord, NULL, 0, NULL);
-	produceRandomMap();
-	while (mainLoop)
+	for (int i = 0; i < LAYER; i++)
 	{
-		printMap();
-		printActor();
-		Sleep(500);
-		actorControl();
-		monsterMove();
-		cls();
+		produceRandomMap();
+		while (mainLoop)
+		{
+			printMap();
+			printActor();
+			Sleep(500);
+			actorControl();
+			monsterMove();
+			cls();
+		}
+		if (alive == false)
+			printGameOver();
+		if (gameLoop)
+			printGameVoctor();
+		mainLoop = true;
+		layer++;
 	}
-	if (gameLoop==false&&mainLoop==false)
-		printGameOver();
-	else
-		printGameVoctor();
 }
