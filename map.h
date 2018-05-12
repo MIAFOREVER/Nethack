@@ -12,14 +12,14 @@ class Map
 #define LAYER 5        //the layer
 public:
 	void run();
+	Map();
+	~Map();
+private:
 	void actorControl();
 	void produceRandomMap();
 	void printMap();
 	void monsterMove();
 	void printActor();
-	Map();
-	~Map();
-private:
 	void produceMainMap();
 	void produceLink();
 	void produceLinkOld();
@@ -35,8 +35,11 @@ private:
 	int findProp(int x, int y);
 	void printGameOver();
 	void printGameVoctor();
+	void operator +(int i);
+
 private:
 	int map[MAX_X][MAX_Y];//cout<<symbol[map[x][y]];
+	bool mapWarFog[MAX_X][MAX_Y];
 	char symbol[30] = { " @X.#MEI|-0123456789ST" };
 	int x[MAPNUM], y[MAPNUM], r[MAPNUM];
 	int monster_num = MONSTERNUM;
@@ -62,4 +65,5 @@ private:
 	int layer;
 	int transport_x;
 	int transport_y;
+	int monsternum = 0;
 };

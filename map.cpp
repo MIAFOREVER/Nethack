@@ -9,35 +9,6 @@ using namespace std;
 using std::cout;
 using std::endl;
 char keyBroadInput;
-bool cls()
-{
-	HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-	COORD coordScreen = { 0, 0 };    /* here's where we'll home the cursor */
-	DWORD cCharsWritten;
-	CONSOLE_SCREEN_BUFFER_INFO csbi; /* to get buffer info */
-	DWORD dwConSize;                 /* number of character cells in the current buffer */
-
-									 /* get the number of character cells in the current buffer */
-	if (!GetConsoleScreenBufferInfo(hConsole, &csbi))
-		return false;
-	dwConSize = csbi.dwSize.X * csbi.dwSize.Y;
-
-	/* fill the entire screen with blanks */
-	if (!FillConsoleOutputCharacter(hConsole, (TCHAR) ' ', dwConSize, coordScreen, &cCharsWritten))
-		return false;
-
-	/* get the current text attribute */
-	if (!GetConsoleScreenBufferInfo(hConsole, &csbi))
-		return false;
-
-	/* now set the buffer's attributes accordingly */
-	if (!FillConsoleOutputAttribute(hConsole, csbi.wAttributes, dwConSize, coordScreen, &cCharsWritten))
-		return false;
-
-	/* put the cursor at (0, 0) */
-	if (!SetConsoleCursorPosition(hConsole, coordScreen))
-		return false;
-}
 int distance(int x1, int y1, int x2, int y2)
 {
 	int distance_x;
@@ -64,6 +35,9 @@ Map::Map()
 	for (int i = 0; i < MAX_X; i++)
 		for (int j = 0; j < MAX_Y; j++)
 			map[i][j] = 0;
+	for (int i = 0; i < MAX_X; i++)
+		for (int j = 0; j < MAX_Y; j++)
+			mapWarFog[i][j] = false;
 	actor_Money = 0;
 	actor_attack = 0;
 	layer = 1;
@@ -302,6 +276,8 @@ void Map::printMap()
 			{
 				//Õ½ÕùÃÔÎíµÄÅÐ¶Ï
 				if (distance(x, y, actor_x, actor_y) < 10)
+					mapWarFog[x][y] = true;
+				if(mapWarFog[x][y]||map[x][y]==21||map[x][y]==20)
 					cout << symbol[map[x][y]];
 				else
 					cout << " ";
@@ -467,10 +443,14 @@ void Map::hit(int x, int y)
 	{
 		mainLoop = false;
 		gameLoop = true;
+
 	}
 	if (map[x][y] == 21)
 	{
 		mainLoop = false;
+		for (int i = 0; i < MAX_X; i++)
+			for (int j = 0; j < MAX_Y; j++)
+				mapWarFog[i][j] = false;
 	}
 }
 void Map::produceTranport()
@@ -567,6 +547,10 @@ void Map::printGameVoctor()
 	Sleep(5000);
 	exit(0);
 }
+void Map::operator+(int i)
+{
+	monsternum++;
+}
 void Map::run()
 {
 	srand(time(0));
@@ -581,7 +565,7 @@ void Map::run()
 			Sleep(500);
 			actorControl();
 			monsterMove();
-			cls();
+			system("cls");
 		}
 		if (alive == false)
 			printGameOver();
