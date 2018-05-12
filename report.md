@@ -3,13 +3,13 @@
 ### 依赖的第三方库
 这次实验使用了``<windows.h>``和``<conio.h>``两个外部库</br>
 ### 如何编译
-由于使用的IDE是Windows下的 VS2017 因此只能给出.sln工程文件用于编译,但为了方便起见,同时也会给出二进制文件.</br>
+由于使用的IDE是Windows下的 VS2017 因此只能给出源代码用于编译,但为了方便起见,同时也会给出二进制文件.</br>
 文件格式为:</br>
 头文件:`Map.h`</br>
 源文件:`Map.cpp`</br>
 主文件`main.cpp`</br>
 ### 如何运行
-直接执行`Nethack.exe`
+直接执行`Release/Nethack.exe`
 ## 操作方法
 README.md里面有详细的解释
 ## 设计思路
