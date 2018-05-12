@@ -1,4 +1,7 @@
-# Nethack a simple game
+# Nethack (a simple game)
+
+## Description
+A hero want to a brave journey
 
 ## How to play?
 1.The Nethack control is ver easy.We use </br>`w`means up
@@ -19,6 +22,7 @@ That is essential operation</br>
 `M`is monster,and its HP is 100 attack is 30</br>
 You will kill him if your attack value is higher than his HP</br>
 `E`is your prop,you will increase your attack value randomly when you eat the `E`</br>
+`T`is a transport machine which transport you to the next level</br>
 `S`is the necklace,our main goal is to achieve it
 
 
@@ -26,19 +30,21 @@ You will kill him if your attack value is higher than his HP</br>
 1.The game map is randomly,and the road is randomly too</br>
 2.If you find some mistake in it,don't be worry and the author will be debug in the next version</br>
 3.The map have `war fog`,that means you can only see a part of the map</br>
-4.high-level option can be changed in map.h
+4.if your HP is 100 and attack is 60,and monster HP is 100 and monster attack is 30,when you hit him,your HP is becoming 70 and monster HP is becoming 40,if your attack is higher than monster HP you will not be hurt and monster will be killed</br>
+5.high-level option can be changed in map.h
 in class map</br>
 ```
 class Map
 {
-#define MAX_X 100
-#define MAX_Y 25
-#define MAX_R 8
-#define MIN_R 4
-#define MAPNUM 8
-#define MONSTERNUM 10
-#define PROPNUM 5
-#define WARFOG 10
+  #define MAX_X 100   //the length of map_x
+  #define MAX_Y 25    //the length of map_y
+  #define MAX_R 8     //the size of room_max
+  #define MIN_R 4     //th size of room_min
+  #define MAPNUM 8    //the size of room number
+  #define MONSTERNUM 10  //monster number
+  #define PROPNUM 5      //prop number
+  #define WARFOG 10      //size of war fog
+  #define LAYER 5        //the layer
 ...
 }
 ```
