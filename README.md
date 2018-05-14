@@ -3,6 +3,16 @@
 ## Description
 A hero want to a brave journey
 
+## Install
+If you are Linux user:</br>
+```
+cd Linux
+make 
+./a.out
+```
+And if you are Windows User,please use VS to build it or </br>
+run `/Windows/Release/Nethack.exe`
+
 ## How to play?
 1.The Nethack control is ver easy.We use </br>`w`means up
 </br>`a`means down
