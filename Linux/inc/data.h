@@ -1,0 +1,31 @@
+#pragma once
+#include"define.h"
+extern int map[MAX_X][MAX_Y];//cout<<symbol[map[x][y]];
+extern bool mapWarFog[MAX_X][MAX_Y];
+extern char symbol[30];
+extern int x[MAPNUM], y[MAPNUM], r[MAPNUM];
+extern int monster_num;
+extern int monster_x[MONSTERNUM];
+extern int monster_y[MONSTERNUM];
+extern int monster_HP[MONSTERNUM];
+extern int monster_attack[MONSTERNUM];
+extern int monster_alive[MONSTERNUM];
+extern int prop_num;
+extern int prop_attack[PROPNUM];
+extern int prop_x[PROPNUM];
+extern int prop_y[PROPNUM];
+extern int actor_HP;
+extern int actor_Money;
+extern int actor_x;
+extern int actor_y;
+extern int actor_attack;
+extern int necklice_x;
+extern int necklice_y;
+extern bool mainLoop;
+extern bool gameLoop;
+extern bool alive;
+extern int layer;
+extern int transport_x;
+extern int transport_y;
+extern int monsternum;
+extern char keyBroadInput;

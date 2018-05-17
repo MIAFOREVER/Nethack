@@ -1,8 +1,8 @@
 #include<iostream>
-#include"map.h"
+#include"Game.h"
 int main()
 {
-	Map map;
-	map.run();
+	Game game;
+	game.run();
 	return 0;
 }
